@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        select {
+            padding: 10px;
+            margin: 20px;
+            font-size: 16px;
+        }
+        .container {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+        canvas {
+            background-color: #444;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estadísticas 2025</h1>
+    <label for="mes">Selecciona un mes:</label>
+    <select id="mes" onchange="actualizarDatos()">
+        <option value="Enero">Enero</option>
+        <option value="Febrero">Febrero</option>
+        <option value="Marzo">Marzo</option>
+        <option value="Abril">Abril</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Junio">Junio</option>
+        <option value="Julio">Julio</option>
+        <option value="Agosto">Agosto</option>
+        <option value="Septiembre">Septiembre</option>
+        <option value="Octubre">Octubre</option>
+        <option value="Noviembre">Noviembre</option>
+        <option value="Diciembre">Diciembre</option>
+    </select><div class="container">
+    <h2 id="tituloMes">Enero</h2>
+    <p><strong>Horas:</strong> <span id="horas">108:30</span></p>
+    <p><strong>Unidades:</strong> <span id="unidades">18,99</span></p>
+    <p><strong>Media/Semana:</strong> <span id="media">25,06</span></p>
+</div>
+
+<canvas id="grafico" width="400" height="200"></canvas>
+
+<script>
+    const datos = {
+        "Enero": { horas: "108:30", unidades: "18,99", media: "25,06" },
+        "Febrero": { horas: "122:00", unidades: "21,35", media: "28,18" },
+        "Marzo": { horas: "149:30", unidades: "26,16", media: "34,53" },
+        "Abril": { horas: "111:30", unidades: "19,51", media: "19,51" },
+        "Mayo": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Junio": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Julio": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Agosto": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Septiembre": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Octubre": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Noviembre": { horas: "0:00", unidades: "0,00", media: "0,00" },
+        "Diciembre": { horas: "0:00", unidades: "0,00", media: "0,00" }
+    };
+    
+    function actualizarDatos() {
+        let mesSeleccionado = document.getElementById("mes").value;
+        document.getElementById("tituloMes").textContent = mesSeleccionado;
+        document.getElementById("horas").textContent = datos[mesSeleccionado].horas;
+        document.getElementById("unidades").textContent = datos[mesSeleccionado].unidades;
+        document.getElementById("media").textContent = datos[mesSeleccionado].media;
+    }
+    
+    const ctx = document.getElementById('grafico').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(datos),
+            datasets: [{
+                label: 'Horas',
+                data: Object.values(datos).map(d => parseFloat(d.horas.replace(':', '.'))),
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
